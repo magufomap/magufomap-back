@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'photologue',
     'sortedm2m',
     'taggit',
+    'mapwidgets',
 ]
 
 MIDDLEWARE = [
@@ -131,13 +132,24 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination'
 }
 
 TAGGIT_CASE_INSENSITIVE = True
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 SITE_ID = 1
 SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
+
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocationName", "madrid"),
+        ("markerFitZoom", 12),
+    ),
+    "GOOGLE_MAP_API_KEY": 'AIzaSyCsC2XNNUoF8gJQxCSH-7mM1hOv2hRuqbg'
+}
