@@ -34,11 +34,15 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'api',
     'rest_framework',
+    'photologue',
+    'sortedm2m',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +129,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
     'PAGINATE_BY': 50
 }
+
+TAGGIT_CASE_INSENSITIVE = True
+
+MEDIA_ROOT = 'os.aqui(/media)'
+MEDIA_URL = '/media/'
