@@ -1,7 +1,7 @@
-import datetime
-
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.gis.db import models as geomodels
+
 from photologue.models import Gallery
 from taggit.managers import TaggableManager
 
@@ -21,6 +21,7 @@ class POI(models.Model):
     #author = models.ForeignKey('User', on_delete=models.SET(get_admin_user))
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200)
+    location = geomodels.PointField(blank=False, null=True)
     description = models.TextField()
     status = models.CharField(max_length=50, choices=STATUS, default="PEN")
     severity = models.IntegerField()

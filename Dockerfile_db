@@ -1,0 +1,5 @@
+FROM postgres:10.1
+LABEL maintainer="pufomap@kaleidos.net"
+
+RUN apt-get update
+RUN apt-get install -y -qq curl vim postgresql-10-postgis-scripts
