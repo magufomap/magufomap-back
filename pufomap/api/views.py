@@ -15,10 +15,12 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class POIFilter(filters.FilterSet):
+
     class Meta:
         model = POI
         fields = {
-            'severity': ['exact', 'in', ]
+            'severity': ['exact', 'in'],
+            #'tags': ['exact', 'in']
         }
 
 
@@ -27,7 +29,6 @@ class POIViewSet(viewsets.ModelViewSet):
     API endpoint that allows POIs to be viewed or edited.
     """
     queryset = POI.objects.order_by('-updated_date')
-    #serializer_class = POISerializer
     bbox_filter_field = 'location'
     filter_backends = (InBBoxFilter, filters.DjangoFilterBackend)
     bbox_filter_include_overlapping = True
