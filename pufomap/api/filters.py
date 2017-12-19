@@ -8,5 +8,6 @@ class POIFilter(filters.FilterSet):
         model = POI
         fields = {
             'severity': ['exact', 'in'],
-            #'tags': ['exact', 'in']
+            'tags__name': ['exact', 'in'],
+            'status': ['exact', 'in']
         }

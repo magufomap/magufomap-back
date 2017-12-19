@@ -25,6 +25,12 @@ class POIViewSet(viewsets.ModelViewSet):
     filter_class = POIFilter
     filter_fields = ('severity',)
 
+    def get_queryset(self, *args, **kwargs):
+        if self.request.user.is_anonymous:
+            return POI.objects.filter(status='PUB').order_by('-updated_date')
+
+        return self.queryset
+
     def list(self, *args, **kwargs):
         self.serializer_class = POIListSerializer
         return viewsets.ModelViewSet.list(self, *args, **kwargs)
