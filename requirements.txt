@@ -4,3 +4,4 @@ djangorestframework==3.7.3
 git+https://github.com/jdufresne/django-taggit.git@dj20
 psycopg2==2.7.3.2
 django-map-widgets==0.1.9
+djangorestframework-gis==0.12
