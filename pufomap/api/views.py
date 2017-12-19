@@ -4,7 +4,8 @@ from rest_framework import viewsets
 from rest_framework_gis.filters import InBBoxFilter
 from api.filters import POIFilter
 from api.models import POI
-from api.serializers import UserSerializer, POIDetailSerializer, POIListSerializer
+from api.serializers import UserSerializer, POIDetailSerializer, POIListSerializer, TagSerializer
+from taggit.models import Tag
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -14,6 +15,10 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    
 class POIViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows POIs to be viewed or edited.

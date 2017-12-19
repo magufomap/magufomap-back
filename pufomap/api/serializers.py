@@ -1,8 +1,14 @@
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
 from api.models import POI, POIImage, Comment
+from taggit.models import Tag
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ("slug","name")
 
 class TagSerializerField(serializers.ListField):
 
