@@ -2,10 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models as geomodels
 
-from photologue.models import Gallery
 from taggit.managers import TaggableManager
 
-# Create your models here.
 
 STATUS = (
     ("PUB","Publicada"),
@@ -13,9 +11,6 @@ STATUS = (
     ("INV","No válida"),
     )
 
-
-#def get_admin_user():
-#    return User.objects.get(username='yami')
 
 class POI(models.Model):
     #author = models.ForeignKey('User', on_delete=models.SET(get_admin_user))
@@ -25,10 +20,6 @@ class POI(models.Model):
     description = models.TextField()
     status = models.CharField(max_length=50, choices=STATUS, default="PEN")
     severity = models.IntegerField()
-    photos = models.OneToOneField(Gallery,
-            related_name='poi',
-            on_delete=models.DO_NOTHING,
-            null=True, blank=True)
     tags = TaggableManager()
     created_date = models.DateTimeField(
             blank=True, null=False,
@@ -41,3 +32,10 @@ class POI(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class POIImage(models.Model):
+    poi = models.ForeignKey('POI', related_name='photos',
+            on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to='uploads',
+            blank=False, null=False)

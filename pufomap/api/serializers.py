@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from api.models import POI
+from api.models import POI, POIImage
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
 
@@ -10,8 +10,8 @@ class TagSerializerField(serializers.ListField):
         if type(data) is not list:
             raise ParseError("expected a list of data")
         return data
-    
-    def to_representation(self, obj): 
+
+    def to_representation(self, obj):
        if type(obj) is not list:
             return [tag.name for tag in obj.all()]
        return obj
@@ -22,10 +22,18 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ('url', 'username', 'email')
 
-class POISerializer(serializers.HyperlinkedModelSerializer):
-    tags = TagSerializerField()    
-    class Meta:
 
+class POIImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = POIImage
+        fields = ('id', 'photo')
+
+
+class POISerializer(serializers.HyperlinkedModelSerializer):
+    tags = TagSerializerField()
+    photos = POIImageSerializer(many=True)
+
+    class Meta:
         model = POI
-        fields = ('name','description','status','severity','tags','created_date','updated_date')
-        
+        fields = ('name','description','status','severity','tags','created_date','updated_date', 'photos', 'url')
+
