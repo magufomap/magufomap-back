@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from api.models import POI
+from api.models import POI, POIImage
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
 
@@ -23,12 +23,17 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'username', 'email')
 
 
+class POIImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = POIImage
+        fields = ('id', 'photo')
+
+
 class POISerializer(serializers.HyperlinkedModelSerializer):
     tags = TagSerializerField()
+    photos = POIImageSerializer(many=True)
 
     class Meta:
         model = POI
-        fields = ('name','description','status','severity','tags','created_date','updated_date', 'gallery')
-        extra_kwargs = {
-            'gallery': {'lookup_field': 'gallery'}
-        }
+        fields = ('name','description','status','severity','tags','created_date','updated_date', 'photos', 'url')
+
