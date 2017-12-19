@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
+from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework_gis.filters import InBBoxFilter
-from api.serializers import UserSerializer
+from api.filters import POIFilter
 from api.models import POI
-from api.serializers import POIDetailSerializer, POIListSerializer
-from django_filters import rest_framework as filters
+from api.serializers import UserSerializer, POIDetailSerializer, POIListSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -12,16 +12,6 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
-class POIFilter(filters.FilterSet):
-
-    class Meta:
-        model = POI
-        fields = {
-            'severity': ['exact', 'in'],
-            #'tags': ['exact', 'in']
-        }
 
 
 class POIViewSet(viewsets.ModelViewSet):
