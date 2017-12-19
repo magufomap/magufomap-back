@@ -30,10 +30,18 @@ class POIImageSerializer(serializers.ModelSerializer):
         fields = ('id', 'photo')
 
 
-class POISerializer(serializers.HyperlinkedModelSerializer):
+class POIDetailSerializer(serializers.HyperlinkedModelSerializer):
     tags = TagSerializerField()
     photos = POIImageSerializer(many=True)
 
     class Meta:
         model = POI
         fields = ('name', 'description', 'status', 'severity', 'tags', 'positive_ratings_count', 'negative_ratings_count', 'created_date', 'updated_date', 'photos', 'url', 'location')
+
+
+class POIListSerializer(serializers.HyperlinkedModelSerializer):
+    tags = TagSerializerField()
+
+    class Meta:
+        model = POI
+        fields = ('name', 'status', 'severity', 'tags', 'url', 'location')

@@ -11,6 +11,13 @@ STATUS = (
     ("INV","No válida"),
     )
 
+SEVERITIES = (
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+)
+
 
 class POI(models.Model):
     #author = models.ForeignKey('User', on_delete=models.SET(get_admin_user))
@@ -19,7 +26,7 @@ class POI(models.Model):
     location = geomodels.PointField(blank=False, null=True)
     description = models.TextField()
     status = models.CharField(max_length=50, choices=STATUS, default="PEN")
-    severity = models.IntegerField()
+    severity = models.IntegerField(choices=SEVERITIES, default=1)
     tags = TaggableManager()
     created_date = models.DateTimeField(
             blank=True, null=False,
@@ -40,7 +47,7 @@ class POI(models.Model):
     def negative_ratings_count(self):
         return len(Rating.objects.filter(poi=self).filter(vote=-1))
 
-    
+
     def __str__(self):
         return self.name
 
