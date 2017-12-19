@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.forms.models import model_to_dict
 from api.models import POI, POIImage
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
@@ -35,5 +36,4 @@ class POISerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = POI
-        fields = ('name','description','status','severity','tags','created_date','updated_date', 'photos', 'url')
-
+        fields = ('name', 'description', 'status', 'severity', 'tags', 'created_date', 'updated_date', 'photos', 'url', 'location')
