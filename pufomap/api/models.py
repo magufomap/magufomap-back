@@ -29,8 +29,10 @@ class POI(models.Model):
             blank=True, null=True,
             auto_now=True,
     )
-    rating = models.ManyToManyField(User, through='Rating')
-
+    rating = models.ManyToManyField(User, related_name='ratings', through='Rating')
+    average_rating = models.IntegerField(null=True, blank=True)
+    comment = models.ManyToManyField(User, related_name='comments', through='Comment')
+    
     def __str__(self):
         return self.name
 
@@ -57,3 +59,15 @@ class Rating(models.Model):
 
     class Meta:
         unique_together = ("user", "poi")
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='user_comments')
+    poi = models.ForeignKey(POI, on_delete=models.CASCADE, related_name='comments')
+    comment = models.TextField()
+    created_date = models.DateTimeField(
+            blank=True, null=False,
+            auto_now_add=True
+    )
+
+    def __str__(self):
+        return "{} comentó {} en {}".format(self.user, self.comment, self.poi)

@@ -36,4 +36,4 @@ class POISerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = POI
-        fields = ('name', 'description', 'status', 'severity', 'tags', 'created_date', 'updated_date', 'photos', 'url', 'location')
+        fields = ('name', 'description', 'status', 'severity', 'tags', 'average_rating', 'created_date', 'updated_date', 'photos', 'url', 'location')
