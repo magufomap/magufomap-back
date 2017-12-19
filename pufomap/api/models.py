@@ -25,7 +25,7 @@ class POI(models.Model):
     description = models.TextField()
     status = models.CharField(max_length=50, choices=STATUS, default="PEN")
     severity = models.IntegerField()
-    photos = models.OneToOneField(Gallery,
+    gallery = models.OneToOneField(Gallery,
             related_name='poi',
             on_delete=models.DO_NOTHING,
             null=True, blank=True)

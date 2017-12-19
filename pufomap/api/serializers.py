@@ -10,8 +10,8 @@ class TagSerializerField(serializers.ListField):
         if type(data) is not list:
             raise ParseError("expected a list of data")
         return data
-    
-    def to_representation(self, obj): 
+
+    def to_representation(self, obj):
        if type(obj) is not list:
             return [tag.name for tag in obj.all()]
        return obj
@@ -22,10 +22,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ('url', 'username', 'email')
 
-class POISerializer(serializers.HyperlinkedModelSerializer):
-    tags = TagSerializerField()    
-    class Meta:
 
+class POISerializer(serializers.HyperlinkedModelSerializer):
+    tags = TagSerializerField()
+
+    class Meta:
         model = POI
-        fields = ('name','description','status','severity','tags','created_date','updated_date')
-        
+        fields = ('name','description','status','severity','tags','created_date','updated_date', 'gallery')
+        extra_kwargs = {
+            'gallery': {'lookup_field': 'gallery'}
+        }
