@@ -29,9 +29,17 @@ class POI(models.Model):
             blank=True, null=True,
             auto_now=True,
     )
-    rating = models.ManyToManyField(User, related_name='ratings', through='Rating')
-    average_rating = models.IntegerField(null=True, blank=True)
-    comment = models.ManyToManyField(User, related_name='comments', through='Comment')
+    ratings = models.ManyToManyField(User, related_name='userratings', through='Rating')
+    comments = models.ManyToManyField(User, related_name='usercomments', through='Comment')
+
+    @property
+    def positive_ratings_count(self):
+        return len(Rating.objects.filter(poi=self).filter(vote=1))
+
+    @property
+    def negative_ratings_count(self):
+        return len(Rating.objects.filter(poi=self).filter(vote=-1))
+
     
     def __str__(self):
         return self.name
@@ -51,7 +59,7 @@ VOTES = (
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='user_pois')
-    poi = models.ForeignKey(POI, on_delete=models.CASCADE, related_name='ratings')
+    poi = models.ForeignKey(POI, on_delete=models.CASCADE, related_name='poi_ratings')
     vote = models.IntegerField(choices=VOTES)
 
     def __str__(self):
@@ -62,7 +70,7 @@ class Rating(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='user_comments')
-    poi = models.ForeignKey(POI, on_delete=models.CASCADE, related_name='comments')
+    poi = models.ForeignKey(POI, on_delete=models.CASCADE, related_name='poi_comments')
     comment = models.TextField()
     created_date = models.DateTimeField(
             blank=True, null=False,
