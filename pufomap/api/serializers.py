@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
-from api.models import POI, POIImage
+from api.models import POI, POIImage, Comment
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
 
@@ -29,14 +29,22 @@ class POIImageSerializer(serializers.ModelSerializer):
         model = POIImage
         fields = ('id', 'photo')
 
-
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = Comment
+        fields = ('user', 'comment', 'created_date')
+        
 class POIDetailSerializer(serializers.HyperlinkedModelSerializer):
     tags = TagSerializerField()
     photos = POIImageSerializer(many=True)
-
+#    poi_comments = serializers.StringRelatedField(many=True)
+#    poi_comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    poi_comments = CommentSerializer(many=True, read_only=True)
+    
     class Meta:
         model = POI
-        fields = ('name', 'description', 'status', 'severity', 'tags', 'positive_ratings_count', 'negative_ratings_count', 'created_date', 'updated_date', 'photos', 'url', 'location')
+        fields = ('name', 'description', 'status', 'severity', 'tags', 'positive_ratings_count', 'negative_ratings_count', 'created_date', 'updated_date', 'photos', 'url', 'location', 'poi_comments')
 
 
 class POIListSerializer(serializers.HyperlinkedModelSerializer):
