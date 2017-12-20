@@ -87,7 +87,7 @@ class POIDetailSerializer(serializers.HyperlinkedModelSerializer):
     visit = serializers.SerializerMethodField()
 
     def get_visit(self, obj):
-        return random.choice([True, False])
+        return obj.visit
 
     class Meta:
         model = POI
@@ -103,7 +103,7 @@ class POIListSerializer(serializers.HyperlinkedModelSerializer):
     visit = serializers.SerializerMethodField()
 
     def get_visit(self, obj):
-        return random.choice([True, False])
+        return obj.visit
 
 
     class Meta:
