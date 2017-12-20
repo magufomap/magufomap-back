@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.db.models import Count, Case, Value, When, Exists, OuterRef
+from django.db.models import Count, Case, Value, When, Exists, OuterRef, Subquery
 from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework_gis.filters import InBBoxFilter
@@ -65,14 +65,29 @@ class POIViewSet(viewsets.ModelViewSet):
                     visited=True,
                     user_id=0
             )
-            return self.queryset.filter(status='PUB').annotate(visit=Exists(visited)).order_by('-updated_date')
+            voted = Rating.objects.filter(
+                    poi=OuterRef('pk'),
+                    user_id=0
+            ).values('vote')
+            return self.queryset.filter(status='PUB')\
+                    .annotate(visit=Exists(visited))\
+                    .annotate(voted=Subquery(voted))\
+                    .order_by('-updated_date')
+
 
         visited = Visited.objects.filter(
                 poi=OuterRef('pk'),
                 visited=True,
                 user_id=self.request.user.id
         )
-        return self.queryset.annotate(visit=Exists(visited)).order_by('-updated_date')
+        voted = Rating.objects.filter(
+                poi=OuterRef('pk'),
+                user_id=self.request.user.id
+        ).values('vote')
+        return self.queryset\
+                .annotate(visit=Exists(visited))\
+                .annotate(voted=Subquery(voted))\
+                .order_by('-updated_date')
 
     def list(self, *args, **kwargs):
         self.serializer_class = POIListSerializer

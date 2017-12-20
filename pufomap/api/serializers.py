@@ -85,27 +85,38 @@ class POIDetailSerializer(serializers.HyperlinkedModelSerializer):
     photos = POIImageSerializer(many=True)
     poi_comments = RetrieveCommentSerializer(many=True, read_only=True)
     visit = serializers.SerializerMethodField()
+    voted = serializers.SerializerMethodField()
+
+    def get_voted(self, obj):
+        return obj.voted
 
     def get_visit(self, obj):
         return obj.visit
 
     class Meta:
         model = POI
-        fields = ('id', 'visit', 'name', 'description',
+        fields = ('id', 'author', 'visit', 'name', 'description',
                   'status', 'severity', 'tags',
                   'positive_ratings_count', 'negative_ratings_count',
                   'created_date', 'updated_date', 'photos', 'url',
-                  'location', 'poi_comments')
+                  'location', 'poi_comments', 'voted')
 
 
 class POIListSerializer(serializers.HyperlinkedModelSerializer):
     tags = TagSerializerField()
     visit = serializers.SerializerMethodField()
 
+    voted = serializers.SerializerMethodField()
+
+    def get_voted(self, obj):
+        return obj.voted
+
     def get_visit(self, obj):
         return obj.visit
 
 
     class Meta:
         model = POI
-        fields = ('id', 'visit', 'name', 'status', 'severity', 'tags', 'url', 'location')
+        fields = ('id', 'visit', 'author', 'name',
+                  'status', 'severity', 'tags', 'url', 'location',
+                  'voted')
