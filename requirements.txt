@@ -2,7 +2,7 @@ django==2.0
 djangorestframework==3.7.3
 djangorestframework-jwt==1.11.0
 #django-taggit==0.22.1
-git+https://github.com/jdufresne/django-taggit.git@dj20
+git+https://github.com/alex/django-taggit.git
 psycopg2==2.7.3.2
 django-map-widgets==0.1.9
 djangorestframework-gis==0.12
