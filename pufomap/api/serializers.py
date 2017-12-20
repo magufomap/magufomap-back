@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
-from api.models import POI, POIImage, Comment
+from api.models import POI, POIImage, Comment, Rating
 from taggit.models import Tag
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
@@ -29,28 +29,52 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ('url', 'username', 'email')
 
+class BasicUserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('url', 'username',)
 
+        
 class POIImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = POIImage
         fields = ('id', 'photo')
 
-class CommentSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+
+class RetrieveCommentSerializer(serializers.ModelSerializer):
+    user = BasicUserSerializer()
     class Meta:
         model = Comment
-        fields = ('user', 'comment', 'created_date')
+        fields = ('user', 'poi', 'comment', 'created_date')
         
+class ListCommentSerializer(serializers.ModelSerializer):
+    user = BasicUserSerializer()
+    class Meta:
+        model = Comment
+        fields = ('user', 'poi', 'comment', 'created_date')
+
+
+class CreateCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('user', 'poi', 'comment', 'created_date')
+
+
+class RatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ('user', 'poi', 'vote')
+
 class POIDetailSerializer(serializers.HyperlinkedModelSerializer):
     tags = TagSerializerField()
     photos = POIImageSerializer(many=True)
 #    poi_comments = serializers.StringRelatedField(many=True)
 #    poi_comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    poi_comments = CommentSerializer(many=True, read_only=True)
+    poi_comments = RetrieveCommentSerializer(many=True, read_only=True)
     
     class Meta:
         model = POI
-        fields = ('name', 'description', 'status', 'severity', 'tags', 'positive_ratings_count', 'negative_ratings_count', 'created_date', 'updated_date', 'photos', 'url', 'location', 'poi_comments')
+        fields = ('id', 'name', 'description', 'status', 'severity', 'tags', 'positive_ratings_count', 'negative_ratings_count', 'created_date', 'updated_date', 'photos', 'url', 'location', 'poi_comments')
 
 
 class POIListSerializer(serializers.HyperlinkedModelSerializer):
@@ -58,4 +82,4 @@ class POIListSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = POI
-        fields = ('name', 'status', 'severity', 'tags', 'url', 'location')
+        fields = ('id', 'name', 'status', 'severity', 'tags', 'url', 'location')
