@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
-from api.models import POI, POIImage, Comment, Rating
+from api.models import POI, POIImage, Comment, Rating, Visited
 from taggit.models import Tag
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
@@ -23,16 +23,29 @@ class TagSerializerField(serializers.ListField):
             return [tag.name for tag in obj.all()]
        return obj
 
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email')
-
 class BasicUserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username',)
+        fields = ('url', 'username', 'id')
+
+
+class RetrieveVisitedSerializer(serializers.ModelSerializer):
+    user = BasicUserSerializer()
+    class Meta:
+        model = Visited
+        fields = ('user', 'poi', 'visited')
+
+class RetrieveBasicVisitedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Visited
+        fields = ('poi', 'visited')
+
+   
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    user_visits = RetrieveBasicVisitedSerializer(many=True, read_only=True)
+    class Meta:
+        model = User
+        fields = ('url', 'username', 'email', 'user_visits')
 
         
 class POIImageSerializer(serializers.ModelSerializer):
@@ -46,6 +59,7 @@ class RetrieveCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('user', 'poi', 'comment', 'created_date')
+
         
 class ListCommentSerializer(serializers.ModelSerializer):
     user = BasicUserSerializer()
@@ -68,8 +82,6 @@ class RatingSerializer(serializers.ModelSerializer):
 class POIDetailSerializer(serializers.HyperlinkedModelSerializer):
     tags = TagSerializerField()
     photos = POIImageSerializer(many=True)
-#    poi_comments = serializers.StringRelatedField(many=True)
-#    poi_comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     poi_comments = RetrieveCommentSerializer(many=True, read_only=True)
     
     class Meta:

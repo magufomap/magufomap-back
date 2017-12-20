@@ -3,8 +3,8 @@ from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework_gis.filters import InBBoxFilter
 from api.filters import POIFilter
-from api.models import POI, Comment, Rating
-from api.serializers import UserSerializer, POIDetailSerializer, POIListSerializer, TagSerializer, ListCommentSerializer, RetrieveCommentSerializer, RatingSerializer, CreateCommentSerializer
+from api.models import POI, Comment, Rating, Visited
+from api.serializers import UserSerializer, POIDetailSerializer, POIListSerializer, TagSerializer, ListCommentSerializer, RetrieveCommentSerializer, RatingSerializer, CreateCommentSerializer, RetrieveVisitedSerializer
 from taggit.models import Tag
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -18,6 +18,10 @@ class UserViewSet(viewsets.ModelViewSet):
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+
+class VisitedViewSet(viewsets.ModelViewSet):
+    queryset = Visited.objects.all()
+    serializer_class = RetrieveVisitedSerializer
 
 
 class CommentViewSet(viewsets.ModelViewSet):

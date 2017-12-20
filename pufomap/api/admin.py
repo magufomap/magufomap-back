@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.gis.db import models as geomodels
-from api.models import POI, POIImage, Rating, Comment
+from api.models import POI, POIImage, Rating, Comment, Visited
 from mapwidgets.widgets import GooglePointFieldWidget
 
 
@@ -12,9 +12,22 @@ class RatingInline(admin.TabularInline):
 
 class CommentInline(admin.TabularInline):
     model = Comment
-
+    
 class CommentAdmin(admin.ModelAdmin):
     model = Comment
+
+class RatingInline(admin.TabularInline):
+    model = Rating
+    
+class RatingAdmin(admin.ModelAdmin):
+    model = Rating
+
+class VisitedInline(admin.TabularInline):
+    model = Visited
+    
+class VisitedAdmin(admin.ModelAdmin):
+    model = Visited
+
     
 class POIAdmin(admin.ModelAdmin):
     formfield_overrides = {
@@ -23,9 +36,13 @@ class POIAdmin(admin.ModelAdmin):
     inlines = [
             ImageInline,
             RatingInline,
-            CommentInline
+            CommentInline,
+            RatingInline,
+            VisitedInline
     ]
 
 
 admin.site.register(POI, POIAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Rating, RatingAdmin)
+admin.site.register(Visited, VisitedAdmin)
