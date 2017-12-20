@@ -9,6 +9,8 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'pois', views.POIViewSet)
 router.register(r'tags', views.TagViewSet)
+router.register(r'comments', views.CommentViewSet)
+router.register(r'ratings', views.RatingViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
