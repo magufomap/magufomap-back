@@ -3,8 +3,10 @@ from django.contrib.auth.models import User
 from django.contrib.gis.geos import Point
 from faker import Faker
 from api.models import POI, STATUS, SEVERITIES, Rating, VOTES, Comment
-import random
 from datetime import datetime
+import random
+import requests
+import shutil
 
 fake = Faker()
 fake.seed(12345678901)
@@ -20,10 +22,40 @@ class Command(BaseCommand):
         pois = create_pois(superusers + users, tags)
         ratings = create_ratings(superusers + users, pois)
         comments = create_comments(superusers + users, pois)
+        photos = create_photos(pois)
 
         #raise CommandError('Poll "%s" does not exist' % poll_id)
         self.stdout.write(self.style.SUCCESS('a tope'))
 
+
+#def create_photos(pois):
+#    paths = ['uno.png', 'dos.png',
+#             'tres.png', 'cuatro.png',
+#             'cinco.png', 'seis.png',
+#             'siete.png', 'ocho.png',
+#             'nueve.png', 'diez.png']
+#
+#    for i in range(0,10):
+#        r = requests.get('http://lorempixel.com/400/200/', stream=True)
+#        if r.status_code == 200:
+#            with open(paths[i], 'wb') as f:
+#                r.raw.decode_content = True
+#                shutil.copyfileobj(r.raw, f)
+#
+#    for poi in pois:
+#        image = POIImage.objects.create(
+#
+#class Layout(models.Model):
+#    image = models.ImageField('img', upload_to='path/')
+#
+#layout = Layout()
+#layout.image = "path/image.png"
+#layout.save()
+#
+#
+#        poi.image = image
+#        poi.save()
+#
 
 def create_superusers():
     superusers = []
