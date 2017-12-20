@@ -31,7 +31,6 @@ class CommentViewSet(viewsets.ModelViewSet):
         self.serializer_class = ListCommentSerializer
         return viewsets.ModelViewSet.list(self, *args, **kwargs)
 
-    
     def retrieve(self, *args, **kwargs):
         self.serializer_class = RetrieveCommentSerializer
         return viewsets.ModelViewSet.retrieve(self, *args, **kwargs)
@@ -40,12 +39,12 @@ class CommentViewSet(viewsets.ModelViewSet):
         self.serializer_class = CreateCommentSerializer
         return viewsets.ModelViewSet.create(self, *args, **kwargs)
 
-    
+
 class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
 
-    
+
 class POIViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows POIs to be viewed or edited.

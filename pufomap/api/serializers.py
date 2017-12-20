@@ -4,6 +4,7 @@ from api.models import POI, POIImage, Comment, Rating, Visited
 from taggit.models import Tag
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
+import random
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,14 +41,14 @@ class RetrieveBasicVisitedSerializer(serializers.ModelSerializer):
         model = Visited
         fields = ('poi', 'visited')
 
-   
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     user_visits = RetrieveBasicVisitedSerializer(many=True, read_only=True)
     class Meta:
         model = User
         fields = ('url', 'username', 'email', 'user_visits')
 
-        
+
 class POIImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = POIImage
@@ -60,7 +61,7 @@ class RetrieveCommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ('user', 'poi', 'comment', 'created_date')
 
-        
+
 class ListCommentSerializer(serializers.ModelSerializer):
     user = BasicUserSerializer()
     class Meta:
@@ -83,15 +84,28 @@ class POIDetailSerializer(serializers.HyperlinkedModelSerializer):
     tags = TagSerializerField()
     photos = POIImageSerializer(many=True)
     poi_comments = RetrieveCommentSerializer(many=True, read_only=True)
-    
+    visit = serializers.SerializerMethodField()
+
+    def get_visit(self, obj):
+        return random.choice([True, False])
+
     class Meta:
         model = POI
-        fields = ('id', 'name', 'description', 'status', 'severity', 'tags', 'positive_ratings_count', 'negative_ratings_count', 'created_date', 'updated_date', 'photos', 'url', 'location', 'poi_comments')
+        fields = ('id', 'visit', 'name', 'description',
+                  'status', 'severity', 'tags',
+                  'positive_ratings_count', 'negative_ratings_count',
+                  'created_date', 'updated_date', 'photos', 'url',
+                  'location', 'poi_comments')
 
 
 class POIListSerializer(serializers.HyperlinkedModelSerializer):
     tags = TagSerializerField()
+    visit = serializers.SerializerMethodField()
+
+    def get_visit(self, obj):
+        return random.choice([True, False])
+
 
     class Meta:
         model = POI
-        fields = ('id', 'name', 'status', 'severity', 'tags', 'url', 'location')
+        fields = ('id', 'visit', 'name', 'status', 'severity', 'tags', 'url', 'location')

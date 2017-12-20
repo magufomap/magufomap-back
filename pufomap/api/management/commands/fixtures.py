@@ -22,7 +22,7 @@ class Command(BaseCommand):
         pois = create_pois(superusers + users, tags)
         ratings = create_ratings(superusers + users, pois)
         comments = create_comments(superusers + users, pois)
-        photos = create_photos(pois)
+        #photos = create_photos(pois)
 
         #raise CommandError('Poll "%s" does not exist' % poll_id)
         self.stdout.write(self.style.SUCCESS('a tope'))

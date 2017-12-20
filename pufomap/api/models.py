@@ -78,7 +78,7 @@ class Rating(models.Model):
     class Meta:
         unique_together = ("user", "poi")
 
-        
+
 class Visited(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='user_visits')
     poi = models.ForeignKey(POI, on_delete=models.CASCADE, related_name='poi_visits')
@@ -90,7 +90,7 @@ class Visited(models.Model):
     class Meta:
         unique_together = ("user", "poi")
 
-        
+
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='user_comments')
     poi = models.ForeignKey(POI, on_delete=models.CASCADE, related_name='poi_comments')
@@ -102,6 +102,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return "{} comentó {} en {}".format(self.user, self.comment, self.poi)
+
 
 @receiver(post_save, sender=Rating, dispatch_uid="update_rating_poi_user_visited")
 @receiver(post_save, sender=Comment, dispatch_uid="update_comment_poi_user_visited")
