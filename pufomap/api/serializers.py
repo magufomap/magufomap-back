@@ -86,6 +86,7 @@ class POIDetailSerializer(serializers.HyperlinkedModelSerializer):
     poi_comments = RetrieveCommentSerializer(many=True, read_only=True)
     visit = serializers.SerializerMethodField()
     voted = serializers.SerializerMethodField()
+    author = BasicUserSerializer()
 
     def get_voted(self, obj):
         return obj.voted
@@ -105,7 +106,7 @@ class POIDetailSerializer(serializers.HyperlinkedModelSerializer):
 class POIListSerializer(serializers.HyperlinkedModelSerializer):
     tags = TagSerializerField()
     visit = serializers.SerializerMethodField()
-
+    author = BasicUserSerializer()
     voted = serializers.SerializerMethodField()
 
     def get_voted(self, obj):
