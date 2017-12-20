@@ -49,10 +49,11 @@ def create_photos(pois):
                 shutil.copyfileobj(r.raw, f)
 
     for poi in pois:
-        poi_image = POIImage()
-        poi_image.photo = random.choice(IMAGES)
-        poi_image.poi = poi
-        poi_image.save()
+        for i in range(0, random.randint(0, 6)):
+            poi_image = POIImage()
+            poi_image.photo = random.choice(IMAGES)
+            poi_image.poi = poi
+            poi_image.save()
 
 
 def create_superusers():
@@ -95,19 +96,19 @@ def create_pois(users, tags):
         author = random.choice(users)
         status = random.choice(STATUS[:2])[0]
         severity = random.choice(SEVERITIES)[0]
-        poi_tags = random.choice(tags)
         created_date = datetime.now()
 
         poi = POI.objects.create(
-            name=fake.word(),
+            name=fake.sentence(),
             author=author,
             location=location,
-            description=fake.paragraph(),
+            description=fake.paragraph(nb_sentences=7),
             status=status,
             severity=severity,
             created_date=created_date
         )
-        poi.tags.add(poi_tags)
+        for i in range(0, random.randint(0, 3)):
+            poi.tags.add(random.choice(tags))
         poi.save()
         pois.append(poi)
 
