@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 from django.contrib.gis.geos import Point
 from faker import Faker
-from api.models import POI, STATUS, SEVERITIES, Rating, VOTES, Comment
+from api.models import POI, STATUS, SEVERITIES, Rating, VOTES, Comment, POIImage
 from datetime import datetime
 import random
 import requests
@@ -22,40 +22,38 @@ class Command(BaseCommand):
         pois = create_pois(superusers + users, tags)
         ratings = create_ratings(superusers + users, pois)
         comments = create_comments(superusers + users, pois)
-        #photos = create_photos(pois)
+        photos = create_photos(pois)
 
         #raise CommandError('Poll "%s" does not exist' % poll_id)
         self.stdout.write(self.style.SUCCESS('a tope'))
 
 
-#def create_photos(pois):
-#    paths = ['uno.png', 'dos.png',
-#             'tres.png', 'cuatro.png',
-#             'cinco.png', 'seis.png',
-#             'siete.png', 'ocho.png',
-#             'nueve.png', 'diez.png']
-#
-#    for i in range(0,10):
-#        r = requests.get('http://lorempixel.com/400/200/', stream=True)
-#        if r.status_code == 200:
-#            with open(paths[i], 'wb') as f:
-#                r.raw.decode_content = True
-#                shutil.copyfileobj(r.raw, f)
-#
-#    for poi in pois:
-#        image = POIImage.objects.create(
-#
-#class Layout(models.Model):
-#    image = models.ImageField('img', upload_to='path/')
-#
-#layout = Layout()
-#layout.image = "path/image.png"
-#layout.save()
-#
-#
-#        poi.image = image
-#        poi.save()
-#
+def create_photos(pois):
+    PATHS = ['media/uploads/uno.png', 'media/uploads/dos.png',
+             'media/uploads/tres.png', 'media/uploads/cuatro.png',
+             'media/uploads/cinco.png', 'media/uploads/seis.png',
+             'media/uploads/siete.png', 'media/uploads/ocho.png',
+             'media/uploads/nueve.png', 'media/uploads/diez.png']
+
+    IMAGES = ['uploads/uno.png', 'uploads/dos.png',
+              'uploads/tres.png', 'uploads/cuatro.png',
+              'uploads/cinco.png', 'uploads/seis.png',
+              'uploads/siete.png', 'uploads/ocho.png',
+              'uploads/nueve.png', 'uploads/diez.png']
+
+    for i in range(0,10):
+        r = requests.get('https://loremflickr.com/320/240', stream=True)
+        if r.status_code == 200:
+            with open(PATHS[i], 'wb') as f:
+                r.raw.decode_content = True
+                shutil.copyfileobj(r.raw, f)
+
+    for poi in pois:
+        poi_image = POIImage()
+        poi_image.photo = random.choice(IMAGES)
+        poi_image.poi = poi
+        poi_image.save()
+
 
 def create_superusers():
     superusers = []

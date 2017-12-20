@@ -10,3 +10,4 @@ django-filter==1.1.0
 django-cors-headers==2.1.0
 Pillow==4.3.0
 Faker==0.8.8
+requests==2.18.4
