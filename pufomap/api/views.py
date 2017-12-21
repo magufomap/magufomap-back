@@ -1,12 +1,13 @@
 from django.contrib.auth.models import User
 from django.db.models import Count, Case, Value, When, Exists, OuterRef, Subquery
 from django_filters import rest_framework as filters
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, mixins
 from rest_framework.response import Response
 from rest_framework_gis.filters import InBBoxFilter
 from api.filters import POIFilter
 from api.models import POI, Comment, Rating, Visited, ChangeRequest
-from api.serializers import UserSerializer, POIDetailSerializer, POIListSerializer, TagSerializer, ListCommentSerializer, RetrieveCommentSerializer, RatingSerializer, CreateCommentSerializer, RetrieveVisitedSerializer, RetrieveChangeRequestSerializer, ListChangeRequestSerializer, CreateChangeRequestSerializer
+from api.serializers import UserSerializer, POIDetailSerializer, POIListSerializer, TagSerializer, ListCommentSerializer, RetrieveCommentSerializer, RatingSerializer, CreateCommentSerializer, RetrieveVisitedSerializer, RetrieveChangeRequestSerializer, ListChangeRequestSerializer, CreateChangeRequestSerializer, POIChangeRequestsListSerializer
 from taggit.models import Tag
 
 
@@ -29,6 +30,33 @@ class UserViewSet(mixins.CreateModelMixin,
         return Response(serializer.data)
 
 
+class ProfileViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows the current user to see useful info
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    def list(self, request):
+        user = get_object_or_404(self.queryset, id=self.request.user.id)
+        serializer = self.serializer_class(user, context={'request': self.request})
+        return Response(serializer.data)
+
+class POIsWithChangeRequestsViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows the current user to see her POIs with change requests
+    """
+    queryset = POI.objects.all()
+    serializer_class = POIChangeRequestsListSerializer
+    def list(self, request):
+#        import pdb; pdb.set_trace()
+        pois = self.queryset.filter(author_id=self.request.user.id).exclude(changerequests=None)
+#        print(pois)
+        serializer = self.serializer_class(pois, many=True, context={'request': self.request})
+        return Response(serializer.data)
+
+
+
+        
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer

@@ -49,6 +49,7 @@ class POI(models.Model):
     changerequests = models.ManyToManyField(User, related_name='changerequests', through='ChangeRequest')
     visited = models.ManyToManyField(User, related_name='uservisits', through='Visited')
 
+
     @property
     def positive_ratings_count(self):
         return len(Rating.objects.filter(poi=self).filter(vote=1))
