@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
 from django.contrib.gis.geos import Point
 from faker import Faker
-from api.models import POI, STATUS, SEVERITIES, Rating, VOTES, Comment, POIImage
+from api.models import POI, STATUS, CRSTATUS, SEVERITIES, Rating, VOTES, Comment, POIImage, ChangeRequest
 from datetime import datetime
 import os
 import random
@@ -21,9 +21,10 @@ class Command(BaseCommand):
         superusers = create_superusers()
         users = create_users()
         pois = create_pois(superusers + users, tags)
-        ratings = create_ratings(superusers + users, pois)
-        comments = create_comments(superusers + users, pois)
-        photos = create_photos(pois)
+        create_photos(pois)
+        create_ratings(superusers + users, pois)
+        create_comments(superusers + users, pois)
+        create_change_requests(superusers + users, pois)
 
         #raise CommandError('Poll "%s" does not exist' % poll_id)
         self.stdout.write(self.style.SUCCESS('a tope'))
@@ -190,107 +191,20 @@ def create_ratings(users, pois):
 
 def create_comments(users, pois):
     for poi in pois:
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
+        for i in range(0, random.randint(0, 16)):
+            Comment.objects.create(
+                    user=random.choice(users),
+                    poi=poi,
+                    comment=fake.text(max_nb_chars=200, ext_word_list=None),
+                    created_date=datetime.now())
 
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
 
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
-
-        user = random.choice(users)
-        comment = Comment.objects.create(
-                user=user,
-                poi=poi,
-                comment=fake.text(max_nb_chars=200, ext_word_list=None),
-                created_date=datetime.now())
+def create_change_requests(users, pois):
+    for poi in pois:
+        for i in range(0, random.randint(0, 8)):
+            ChangeRequest.objects.create(
+                    user=random.choice(users),
+                    poi=poi,
+                    change=fake.text(max_nb_chars=200, ext_word_list=None),
+                    status=random.choice(CRSTATUS)[0],
+                    created_date=datetime.now())
