@@ -4,6 +4,7 @@ from api.models import POI, POIImage, Comment, Rating, Visited, ChangeRequest
 from taggit.models import Tag
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
+from rest_framework.validators import UniqueValidator
 import random
 
 class TagSerializer(serializers.ModelSerializer):
