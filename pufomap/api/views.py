@@ -80,6 +80,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def create(self, *args, **kwargs):
         self.serializer_class = CreateCommentSerializer
+        self.request.data["user"] = self.request.user.id
         return viewsets.ModelViewSet.create(self, *args, **kwargs)
 
 
@@ -96,15 +97,15 @@ class ChangeRequestViewSet(viewsets.ModelViewSet):
 
     def create(self, *args, **kwargs):
         self.serializer_class = CreateChangeRequestSerializer
+        self.request.data["user"] = self.request.user.id
         return viewsets.ModelViewSet.create(self, *args, **kwargs)
 
 
-    
 class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
 
-    
+
 class POIViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows POIs to be viewed or edited.
