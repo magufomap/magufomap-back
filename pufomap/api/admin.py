@@ -12,29 +12,26 @@ class RatingInline(admin.TabularInline):
 
 class CommentInline(admin.TabularInline):
     model = Comment
-    
+
 class CommentAdmin(admin.ModelAdmin):
     model = Comment
 
 class ChangeRequestInline(admin.TabularInline):
     model = ChangeRequest
-    
+
 class ChangeRequestAdmin(admin.ModelAdmin):
     model = ChangeRequest
 
-class RatingInline(admin.TabularInline):
-    model = Rating
-    
 class RatingAdmin(admin.ModelAdmin):
     model = Rating
 
 class VisitedInline(admin.TabularInline):
     model = Visited
-    
+
 class VisitedAdmin(admin.ModelAdmin):
     model = Visited
 
-    
+
 class POIAdmin(admin.ModelAdmin):
     formfield_overrides = {
         geomodels.PointField: {"widget": GooglePointFieldWidget}
