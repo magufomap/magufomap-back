@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
-from api.models import POI, POIImage, Comment, Rating, Visited
+from api.models import POI, POIImage, Comment, Rating, Visited, ChangeRequest
 from taggit.models import Tag
 from rest_framework import serializers
 from rest_framework.exceptions import ParseError
@@ -75,6 +75,24 @@ class CreateCommentSerializer(serializers.ModelSerializer):
         fields = ('user', 'poi', 'comment', 'created_date')
 
 
+class ListChangeRequestSerializer(serializers.ModelSerializer):
+    user = BasicUserSerializer()
+    class Meta:
+        model = ChangeRequest
+        fields = ('user', 'poi', 'change', 'created_date')
+
+class RetrieveChangeRequestSerializer(serializers.ModelSerializer):
+    user = BasicUserSerializer()
+    class Meta:
+        model = ChangeRequest
+        fields = ('user', 'poi', 'change', 'created_date')
+
+class CreateChangeRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChangeRequest
+        fields = ('user', 'poi', 'change', 'created_date')
+
+        
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating

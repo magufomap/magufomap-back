@@ -4,8 +4,8 @@ from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from rest_framework_gis.filters import InBBoxFilter
 from api.filters import POIFilter
-from api.models import POI, Comment, Rating, Visited
-from api.serializers import UserSerializer, POIDetailSerializer, POIListSerializer, TagSerializer, ListCommentSerializer, RetrieveCommentSerializer, RatingSerializer, CreateCommentSerializer, RetrieveVisitedSerializer
+from api.models import POI, Comment, Rating, Visited, ChangeRequest
+from api.serializers import UserSerializer, POIDetailSerializer, POIListSerializer, TagSerializer, ListCommentSerializer, RetrieveCommentSerializer, RatingSerializer, CreateCommentSerializer, RetrieveVisitedSerializer, RetrieveChangeRequestSerializer, ListChangeRequestSerializer, CreateChangeRequestSerializer
 from taggit.models import Tag
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -41,11 +41,28 @@ class CommentViewSet(viewsets.ModelViewSet):
         return viewsets.ModelViewSet.create(self, *args, **kwargs)
 
 
+class ChangeRequestViewSet(viewsets.ModelViewSet):
+    queryset = ChangeRequest.objects.order_by('-created_date')
+
+    def list(self, *args, **kwargs):
+        self.serializer_class = ListChangeRequestSerializer
+        return viewsets.ModelViewSet.list(self, *args, **kwargs)
+
+    def retrieve(self, *args, **kwargs):
+        self.serializer_class = RetrieveChangeRequestSerializer
+        return viewsets.ModelViewSet.retrieve(self, *args, **kwargs)
+
+    def create(self, *args, **kwargs):
+        self.serializer_class = CreateChangeRequestSerializer
+        return viewsets.ModelViewSet.create(self, *args, **kwargs)
+
+
+    
 class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
 
-
+    
 class POIViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows POIs to be viewed or edited.

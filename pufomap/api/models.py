@@ -40,6 +40,7 @@ class POI(models.Model):
     )
     ratings = models.ManyToManyField(User, related_name='userratings', through='Rating')
     comments = models.ManyToManyField(User, related_name='usercomments', through='Comment')
+    changerequests = models.ManyToManyField(User, related_name='changerequests', through='ChangeRequest')
     visited = models.ManyToManyField(User, related_name='uservisits', through='Visited')
 
     @property
@@ -102,6 +103,18 @@ class Comment(models.Model):
 
     def __str__(self):
         return "{} comentó {} en {}".format(self.user, self.comment, self.poi)
+
+class ChangeRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='user_changes')
+    poi = models.ForeignKey(POI, on_delete=models.CASCADE, related_name='poi_changes')
+    change = models.TextField()
+    created_date = models.DateTimeField(
+            blank=True, null=False,
+            auto_now_add=True
+    )
+
+    def __str__(self):
+        return "{} propuso el cambio [ {} ] en {}".format(self.user, self.change, self.poi)
 
 
 @receiver(post_save, sender=Rating, dispatch_uid="update_rating_poi_user_visited")
