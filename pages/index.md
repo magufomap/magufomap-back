@@ -38,7 +38,7 @@ A continuación listamos las preguntas más habituales alrededor del proyecto y 
 
 #### ¿Qué riesgo existe de que una persona malintencionada cree un POIM fraudulento con la intención de perjudicar a una actividad?
 
-Este riesgo es difícil de medir pero tenemos mecanismos para mitigarlo. En primer lugar, solo las editoras pueden confirmar un POIM propuesto antes de que se visualice por todo el mundo. En segundo lugar, las usuarias pueden valorar la calidad de un POIM y si muchos votos negativos se acumulan en un POIM, las editoras analizarían el caso concreto. De igual manera, las editoras pueden monitorizan las enmiendas a un POI idependientemente de que también lo haga su creadora. Si un POIM resulta particularmenye polémico o dudoso, una editora siempre puede inahibilitarlo temporalmente hasta que se resuelva el caso.
+Este riesgo es difícil de medir pero tenemos mecanismos para mitigarlo. En primer lugar, solo las editoras pueden confirmar un POIM propuesto antes de que se visualice por todo el mundo. En segundo lugar, las usuarias pueden valorar la calidad de un POIM y si muchos votos negativos se acumulan en un POIM, las editoras analizarían el caso concreto. De igual manera, las editoras pueden monitorizan las enmiendas a un POI idependientemente de que también lo haga su creadora. Si un POIM resulta particularmente polémico o dudoso, una editora siempre puede inahibilitarlo temporalmente hasta que se resuelva el caso.
 
 #### ¿Tiene sentido dar de alta un POIM de una iglesia de una religión en particular?
 
