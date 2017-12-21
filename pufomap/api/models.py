@@ -13,6 +13,12 @@ STATUS = (
     ("INV","No válida"),
     )
 
+CRSTATUS = (
+    ("ACE","Aceptada"),
+    ("PEN","Pendiente"),
+    ("REC","Rechazada"),
+    )
+
 SEVERITIES = (
     (1, 1),
     (2, 2),
@@ -69,7 +75,7 @@ VOTES = (
 
 
 class Rating(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='user_pois')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='user_ratings')
     poi = models.ForeignKey(POI, on_delete=models.CASCADE, related_name='poi_ratings')
     vote = models.IntegerField(choices=VOTES)
 
@@ -108,17 +114,19 @@ class ChangeRequest(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='user_changes')
     poi = models.ForeignKey(POI, on_delete=models.CASCADE, related_name='poi_changes')
     change = models.TextField()
+    status = models.CharField(max_length=50, choices=CRSTATUS, default="PEN")
     created_date = models.DateTimeField(
             blank=True, null=False,
             auto_now_add=True
     )
 
     def __str__(self):
-        return "{} propuso el cambio [ {} ] en {}".format(self.user, self.change, self.poi)
+        return "{} propuso el cambio [ {} ] en {} [Estado {}]".format(self.user, self.change, self.poi, self.status)
 
 
 @receiver(post_save, sender=Rating, dispatch_uid="update_rating_poi_user_visited")
 @receiver(post_save, sender=Comment, dispatch_uid="update_comment_poi_user_visited")
+@receiver(post_save, sender=ChangeRequest, dispatch_uid="update_changerequest_poi_user_visited")
 def update_visitedpoi(sender, instance, **kwargs):
     v, created = Visited.objects.get_or_create(user=instance.user, poi=instance.poi)
     v.visited = True
