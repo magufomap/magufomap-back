@@ -25,7 +25,8 @@ class UserViewSet(mixins.CreateModelMixin,
     def create(self, *args, **kwargs):
         user = User.objects.create_user(username=self.request.data['username'],
                                  email=self.request.data['email'],
-                                 password=self.request.data['password'])
+                                 password=self.request.data['password'],
+                                 is_staff=True)
         serializer = self.serializer_class(user, context={'request': self.request})
         return Response(serializer.data)
 
@@ -48,15 +49,11 @@ class POIsWithChangeRequestsViewSet(viewsets.ModelViewSet):
     queryset = POI.objects.all()
     serializer_class = POIChangeRequestsListSerializer
     def list(self, request):
-#        import pdb; pdb.set_trace()
         pois = self.queryset.filter(author_id=self.request.user.id).exclude(changerequests=None)
-#        print(pois)
         serializer = self.serializer_class(pois, many=True, context={'request': self.request})
         return Response(serializer.data)
 
 
-
-        
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer

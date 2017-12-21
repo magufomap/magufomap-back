@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.gis.geos import Point
 from faker import Faker
 from api.models import POI, STATUS, CRSTATUS, SEVERITIES, Rating, VOTES, Comment, POIImage, ChangeRequest
@@ -86,9 +86,12 @@ def create_users():
         user = User.objects.create_user(
                 name,
                 fake.email(),
-                "{}1234".format(name)
+                "{}1234".format(name),
+                is_staff=True,
         )
         users.append(user)
+        group = Group.objects.get(name='Editor')
+        group.user_set.add(user)
     return users
 
 
