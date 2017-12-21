@@ -43,13 +43,6 @@ class RetrieveBasicVisitedSerializer(serializers.ModelSerializer):
         fields = ('poi', 'visited')
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    user_visits = RetrieveBasicVisitedSerializer(many=True, read_only=True)
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'user_visits')
-
-
 class POIImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = POIImage
@@ -80,18 +73,18 @@ class ListChangeRequestSerializer(serializers.ModelSerializer):
     user = BasicUserSerializer()
     class Meta:
         model = ChangeRequest
-        fields = ('user', 'poi', 'change', 'created_date')
+        fields = ('user', 'poi', 'change', 'status', 'created_date')
 
 class RetrieveChangeRequestSerializer(serializers.ModelSerializer):
     user = BasicUserSerializer()
     class Meta:
         model = ChangeRequest
-        fields = ('user', 'poi', 'change', 'created_date')
+        fields = ('user', 'poi', 'change', 'status', 'created_date')
 
 class CreateChangeRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChangeRequest
-        fields = ('user', 'poi', 'change', 'created_date')
+        fields = ('user', 'poi', 'change', 'status', 'created_date')
 
         
 class RatingSerializer(serializers.ModelSerializer):
@@ -103,6 +96,7 @@ class POIDetailSerializer(serializers.HyperlinkedModelSerializer):
     tags = TagSerializerField()
     photos = POIImageSerializer(many=True)
     poi_comments = RetrieveCommentSerializer(many=True, read_only=True)
+    poi_changes = RetrieveChangeRequestSerializer(many=True, read_only=True)
     visit = serializers.SerializerMethodField()
     voted = serializers.SerializerMethodField()
     author = BasicUserSerializer()
@@ -119,7 +113,17 @@ class POIDetailSerializer(serializers.HyperlinkedModelSerializer):
                   'status', 'severity', 'tags',
                   'positive_ratings_count', 'negative_ratings_count',
                   'created_date', 'updated_date', 'photos', 'url',
-                  'location', 'poi_comments', 'voted')
+                  'location', 'poi_comments', 'poi_changes', 'voted')
+
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    user_visits = RetrieveBasicVisitedSerializer(many=True, read_only=True)
+    user_ratings = RatingSerializer(many=True, read_only=True)
+    user_changes = RetrieveChangeRequestSerializer(many=True, read_only=True)
+    class Meta:
+        model = User
+        fields = ('url', 'username', 'email', 'user_visits', 'user_ratings', 'user_changes')
 
 
 class POIListSerializer(serializers.HyperlinkedModelSerializer):

@@ -28,6 +28,25 @@ class UserViewSet(mixins.CreateModelMixin,
         serializer = self.serializer_class(user, context={'request': self.request})
         return Response(serializer.data)
 
+class ProfileViewSet(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  mixins.DestroyModelMixin,
+                  viewsets.GenericViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def create(self, *args, **kwargs):
+        user = User.objects.create_user(username=self.request.data['username'],
+                                 email=self.request.data['email'],
+                                 password=self.request.data['password'])
+        serializer = self.serializer_class(user, context={'request': self.request})
+        return Response(serializer.data)
+
+
 
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()

@@ -8,6 +8,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
+router.register(r'current-user', views.ProfileViewSet)
 router.register(r'pois', views.POIViewSet)
 router.register(r'tags', views.TagViewSet)
 router.register(r'comments', views.CommentViewSet)
