@@ -4,6 +4,7 @@ from django.contrib.gis.geos import Point
 from faker import Faker
 from api.models import POI, STATUS, SEVERITIES, Rating, VOTES, Comment, POIImage
 from datetime import datetime
+import os
 import random
 import requests
 import shutil
@@ -29,6 +30,9 @@ class Command(BaseCommand):
 
 
 def create_photos(pois):
+    if not os.path.exists('media/uploads'):
+        os.makedirs('media/uploads')
+
     PATHS = ['media/uploads/uno.png', 'media/uploads/dos.png',
              'media/uploads/tres.png', 'media/uploads/cuatro.png',
              'media/uploads/cinco.png', 'media/uploads/seis.png',
@@ -97,17 +101,18 @@ def create_pois(users, tags):
         status = random.choice(STATUS[:2])[0]
         severity = random.choice(SEVERITIES)[0]
         created_date = datetime.now()
+        description = ' '.join(fake.paragraphs(nb=4, ext_word_list=None))
 
         poi = POI.objects.create(
-            name=fake.sentence(),
+            name=fake.company(),
             author=author,
             location=location,
-            description=fake.paragraph(nb_sentences=7),
+            description=description,
             status=status,
             severity=severity,
             created_date=created_date
         )
-        for i in range(0, random.randint(0, 3)):
+        for i in range(1,random.randint(2,4)):
             poi.tags.add(random.choice(tags))
         poi.save()
         pois.append(poi)

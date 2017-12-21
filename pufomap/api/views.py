@@ -1,31 +1,57 @@
 from django.contrib.auth.models import User
 from django.db.models import Count, Case, Value, When, Exists, OuterRef, Subquery
 from django_filters import rest_framework as filters
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
+from rest_framework.response import Response
 from rest_framework_gis.filters import InBBoxFilter
 from api.filters import POIFilter
 from api.models import POI, Comment, Rating, Visited, ChangeRequest
 from api.serializers import UserSerializer, POIDetailSerializer, POIListSerializer, TagSerializer, ListCommentSerializer, RetrieveCommentSerializer, RatingSerializer, CreateCommentSerializer, RetrieveVisitedSerializer, RetrieveChangeRequestSerializer, ListChangeRequestSerializer, CreateChangeRequestSerializer
 from taggit.models import Tag
 
-class UserViewSet(viewsets.ModelViewSet):
+
+class UserViewSet(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  mixins.DestroyModelMixin,
+                  viewsets.GenericViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class ProfileViewSet(viewsets.ModelViewSet):
+    def create(self, *args, **kwargs):
+        user = User.objects.create_user(username=self.request.data['username'],
+                                 email=self.request.data['email'],
+                                 password=self.request.data['password'])
+        serializer = self.serializer_class(user, context={'request': self.request})
+        return Response(serializer.data)
+
+class ProfileViewSet(mixins.CreateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  mixins.DestroyModelMixin,
+                  viewsets.GenericViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def create(self, *args, **kwargs):
+        user = User.objects.create_user(username=self.request.data['username'],
+                                 email=self.request.data['email'],
+                                 password=self.request.data['password'])
+        serializer = self.serializer_class(user, context={'request': self.request})
+        return Response(serializer.data)
+
 
 
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+
 
 class VisitedViewSet(viewsets.ModelViewSet):
     queryset = Visited.objects.all()

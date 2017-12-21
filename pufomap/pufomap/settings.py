@@ -141,6 +141,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+    'JWT_VERIFY_EXPIRATION': False
 }
 
 # django-cors-headers settings
