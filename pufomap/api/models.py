@@ -108,6 +108,9 @@ class Comment(models.Model):
             auto_now_add=True
     )
 
+    class Meta:
+        ordering = ["-created_date", "id"]
+
     def __str__(self):
         return "{} comentó {} en {}".format(self.user, self.comment, self.poi)
 
@@ -120,6 +123,9 @@ class ChangeRequest(models.Model):
             blank=True, null=False,
             auto_now_add=True
     )
+
+    class Meta:
+        ordering = ["-created_date", "id"]
 
     def __str__(self):
         return "{} propuso el cambio [ {} ] en {} [Estado {}]".format(self.user, self.change, self.poi, self.status)
