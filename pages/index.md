@@ -1,22 +1,22 @@
 ## Magufomap
 
-Os presentamos MagufoMap, un portal donde a través de la participación ciudadana, pretendemos elaborar un mapa de negocios y actividades que promuevan o comercien con fenómenos paranormales o pseudocientíficos.
+Os presentamos MagufoMap, un portal donde, a través de la participación ciudadana, pretendemos elaborar un mapa de negocios y actividades que promuevan o comercien con fenómenos paranormales o pseudocientíficos.
 
 Desafortunadamente, abundan los ejemplos de farmacias que venden homeopatía, clínicas de dietas milagro y centros de Reiki o acupuntura. Pero no solamente esto, numerosos productos fraudulentos se distribuyen también en centros comerciales o pueden adquirirse en pequeños negocios familiares.
 
-MagufoMap tiene un doble objetivo. Por un lado, un inventario geolocalizado y etiquetado de cuantos lugares podamos a modo de lista negra. Por otro, de la difusión y puesta en común de esta información por la gente hacia los propios proponentes de estas prácticas listados en MagufoMap con la esperanza de que rectifiquen.
+MagufoMap tiene un doble objetivo. Por un lado, un inventario geolocalizado y etiquetado de cuantos lugares podamos a modo de lista negra. Por otro, la difusión y puesta en común de esta información por la gente hacia los propios proponentes de estas prácticas listados en MagufoMap con la esperanza de que rectifiquen.
 
 Desafortunadamente, como se nos ha hecho saber, es cierto que MagufoMap podría ser la plataforma de referencia para los defensores de todo tipo de magufadas en su búsqueda de actividades y negocios afines :P
 
 ### ¿Cómo funciona MagufoMap?
 
-Cualquier persona sin necesidad de tener usuario puede consultar el contenido en MagufoMap. No podrá realizar ninguna interacción más que la visualización de la información pero eso ya de por sí es la mayor utilidad de MagufoMap.
+Cualquier persona sin necesidad de tener usuaria puede consultar el contenido en MagufoMap. No podrá realizar ninguna interacción más que la visualización de la información pero eso ya de por sí es la mayor utilidad de MagufoMap.
 
-Una persona que se registrara en la plataforma (usuario) podría además contribuir con propuestas de puntos de interés magufo (POIMs), comentar en otros POIMs, valorar la calidad de otros POIMs y proponer cambios en éstos. Asimismo, puede revisar propuestas de cambios hechos a sus POIMs y modificarlos a su conveniencia. Cualquier actividad sobre un POIM hará que ese POIM aparezca como "visitado" por la persona y pueda llevar así un recuento de POIMs "no visitados".
+Una persona que se registrara en la plataforma (usuaria) podría además contribuir con propuestas de puntos de interés magufo (POIMs), comentar en otros POIMs, valorar la calidad de otros POIMs y proponer cambios en éstos. Asimismo, puede revisar propuestas de cambios hechos a sus POIMs y modificarlos a su conveniencia. Cualquier actividad sobre un POIM hará que ese POIM aparezca como "visitado" por la persona y pueda llevar así un recuento de POIMs "no visitados".
 
 Finalmente, una persona que obtenga el estatus de editora podrá, además de lo permitido a una usuaria, aceptar propuestas de puntos de interés magufo (POIMs) de otras usuarias. El grupo de editoras se gestionará inicialmente con mecanismos sencillos de anillos de confianza.
 
-MagufoMap puede consultarse vía web tanto en un ordenador como en tablet o móvil. Aunque MagufoMap permite que la usuario seleccione la zona del mapa que desea consultar o la ubicación para la que desea proponer un POI, existe la posibilidad de permitir la geolocalización por MagufoMap y centrar el mapa en el lugar sugerido por el navegador.
+MagufoMap puede consultarse vía web tanto en un ordenador como en tablet o móvil. Aunque MagufoMap permite que la usuaria seleccione la zona del mapa que desea consultar o la ubicación para la que desea proponer un POI, existe la posibilidad de permitir la geolocalización por MagufoMap y centrar el mapa en el lugar sugerido por el navegador.
 
 ### ¿Qué es exactamente un Punto de interés magufo o POIM?
 
@@ -24,7 +24,7 @@ Un Punto de interés Magufo o POIM es un lugar concreto como un negocio o un cen
 
 Un POIM consta de un nombre identificativo, una descripción, un número opcional de fotografías o imágenes, una severidad, una lista de etiquetas y unas coordenadas GPS. Asimismo, un POIM puede contener comentarios de usuarias así como recibir enmiendas.
 
-Cuando un POIM es creado por una usuaria, nace pendiente de revisión y solamente las editoras pueden visualizarlo y decidir si aceptarlos o no. Una vez aceptado, el proponente de un POIM puede actualizar su POIM cuando considere tomando o no en cuentas las enmiendas enviadas por parte de las usuarias (que se muestran en una sección aparte).
+Cuando un POIM es creado por una usuaria, nace pendiente de revisión y solamente las editoras pueden visualizarlo y decidir si aceptarlos o no. Una vez aceptado, la proponente de un POIM puede actualizar su POIM cuando considere tomando o no en cuentas las enmiendas enviadas por parte de las usuarias (que se muestran en una sección aparte).
 
 ### ¿Cómo puedo ser editora de MagufoMap?
 
@@ -46,7 +46,7 @@ Sí, tiene todo el sentido ya que se encuadran dentro de la disfusión de fenóm
 
 #### ¿Puede un POIM representar un evento o un suceso en concreto?
 
-En principio no lo vemos útil ya que el mapa tiene una consideración relativamente atemporal. Sin embargo, si se trata de un evento de varios días en una misma ubicación o tiene una frecuencia concreta, entonces sí te animamos a que lo propongas dejando claro esta cirunstancia. En el caso de un evento que no se prevé que vuelva a ocurrir en esa ubicación, una editora lo inhabilitará pasados unos días.
+En principio no lo vemos útil ya que el mapa tiene una consideración relativamente atemporal. Sin embargo, si se trata de un evento de varios días en una misma ubicación o tiene una frecuencia concreta, entonces sí te animamos a que lo propongas dejando claro esta cirunstancia. En el caso de un evento que no se prevea que vuelva a ocurrir en esa ubicación, una editora lo inhabilitará pasados unos días.
 
 #### ¿Se pueden mencionar marcas comerciales en un POIM?
 
