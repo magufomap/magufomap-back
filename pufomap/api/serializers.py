@@ -144,3 +144,11 @@ class POIListSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'visit', 'author', 'name',
                   'status', 'severity', 'tags', 'url', 'location',
                   'voted')
+
+class POIChangeRequestsListSerializer(serializers.ModelSerializer):
+    tags = TagSerializerField()
+    class Meta:
+        model = POI
+        fields = ('id', 'author', 'name',
+                  'status', 'severity', 'tags', 'url', 'location',)
+

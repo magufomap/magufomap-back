@@ -7,7 +7,8 @@ from api import views
 from rest_framework_jwt.views import obtain_jwt_token
 
 router = routers.DefaultRouter()
-router.register(r'current-user', views.UserViewSet)
+router.register(r'current-user/mypoiswithchangerequests', views.POIsWithChangeRequestsViewSet)
+router.register(r'current-user', views.ProfileViewSet, 'User')
 router.register(r'users', views.UserViewSet)
 router.register(r'pois', views.POIViewSet)
 router.register(r'tags', views.TagViewSet)
