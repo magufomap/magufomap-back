@@ -1,8 +1,11 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib import admin
+from django.contrib.auth.models import User, Permission, Group
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.gis.db import models as geomodels
-from api.models import POI, POIImage, Rating, Comment, Visited, ChangeRequest
+from api.models import (POI, POIImage,
+                        Rating, Comment,
+                        Visited, ChangeRequest)
 from mapwidgets.widgets import GooglePointFieldWidget
 
 
@@ -194,3 +197,47 @@ admin.site.register(Comment, CommentAdmin)
 admin.site.register(Rating, RatingAdmin)
 admin.site.register(Visited, VisitedAdmin)
 admin.site.register(ChangeRequest, ChangeRequestAdmin)
+
+
+# def create_modeladmin(modeladmin, model, name=None):
+#     class  Meta:
+#         proxy = True
+#         app_label = 'api'
+#         permissions = (
+#             ('can_myrating_add', 'Can add myrating'),
+#         )
+#
+#     attrs = {'__module__': 'api.models', 'Meta': Meta}
+#     newmodel = type(name, (model,), attrs)
+#
+#     content_type = ContentType.objects.get(app_label='api', model=name.lower())
+#     perms = Permission.objects.filter(content_type=content_type)
+#     group = Group.objects.get(name='Editor')
+#     for p in perms:
+#         group.permissions.add(perms)
+#
+#     admin.site.register(newmodel, modeladmin)
+#     return modeladmin
+#
+#
+# class MyRating(Rating):
+#     class Meta:
+#         proxy = True
+#         app_label = 'api'
+#         permissions = (
+#             ('add_myrating', 'Can add myrating'),
+#         )
+#
+#
+# class MyRatingAdmin(RatingAdmin):
+#     def get_queryset(self, request):
+#         if request.user.is_superuser:
+#             return super().get_queryset(request)
+#
+#         # si no es superuser, solo puede ver los ratings que le han hecho a sus pois
+#         return super().get_queryset(request).filter(poi__author=request.user)
+#
+# content_type = ContentType.objects.get(app_label='api', model='myrating')
+# import pdb; pdb.set_trace()
+# admin.site.register(MyRating, MyRatingAdmin)
+# create_modeladmin(MyRatingAdmin, name='MyRating', model=Rating)
