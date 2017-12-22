@@ -192,6 +192,15 @@ class POIAdmin(admin.ModelAdmin):
         return super().get_queryset(request).filter(author=request.user)
 
 
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser:
+            return ()
+
+        # si no es superuser, no puede editar los comentarios
+        return ('status',)
+
+
+
 admin.site.register(POI, POIAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Rating, RatingAdmin)
