@@ -13,6 +13,14 @@ class ImageInline(admin.TabularInline):
 class RatingAdmin(admin.ModelAdmin):
     model = Rating
 
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            return super().get_queryset(request)
+
+        # si no es superuser, solo puede ver los ratings que ha hecho
+        return super().get_queryset(request).filter(user=request.user)
+
+
     def get_actions(self, request):
         actions = super().get_actions(request)
         if not request.user.is_superuser:
@@ -50,6 +58,14 @@ class CommentInline(admin.TabularInline):
 class CommentAdmin(admin.ModelAdmin):
     model = Comment
 
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            return super().get_queryset(request)
+
+        # si no es superuser, solo puede ver los comments que ha hecho
+        return super().get_queryset(request).filter(user=request.user)
+
+
     def get_actions(self, request):
         actions = super().get_actions(request)
         if not request.user.is_superuser:
@@ -77,6 +93,14 @@ class ChangeRequestInline(admin.TabularInline):
 class ChangeRequestAdmin(admin.ModelAdmin):
     model = ChangeRequest
 
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            return super().get_queryset(request)
+
+        # si no es superuser, solo puede ver los change request que ha hecho
+        return super().get_queryset(request).filter(user=request.user)
+
+
     def get_actions(self, request):
         actions = super().get_actions(request)
         if not request.user.is_superuser:
@@ -103,6 +127,14 @@ class VisitedInline(admin.TabularInline):
 
 class VisitedAdmin(admin.ModelAdmin):
     model = Visited
+
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            return super().get_queryset(request)
+
+        # si no es superuser, solo puede ver los pois de los que es author
+        return super().get_queryset(request).filter(author=request.user)
+
 
     def get_actions(self, request):
         actions = super().get_actions(request)
@@ -138,6 +170,7 @@ class POIAdmin(admin.ModelAdmin):
             CommentEditorInline,
             VisitedEditorInline
     ]
+    exclude = ['author']
 
     def get_inline_instances(self, request, obj):
         if request.user.is_superuser:
@@ -147,17 +180,6 @@ class POIAdmin(admin.ModelAdmin):
         # si no es superuser, no puede editar los comentarios
         inlines = self.inlines + self.editor_inlines
         return [inline(self.model, self.admin_site) for inline in inlines]
-
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super().get_form(request, obj, **kwargs)
-        if request.user.is_superuser:
-            return form
-
-        # si no es superuser, solo puede ponerse a sí misma como autora
-        form.base_fields['author'].queryset = User.objects.filter(pk=request.user.id)
-        return form
-
 
     def get_queryset(self, request):
         if request.user.is_superuser:
