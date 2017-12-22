@@ -42,6 +42,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
         serializer = self.serializer_class(user, context={'request': self.request})
         return Response(serializer.data)
 
+
 class POIsWithChangeRequestsViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows the current user to see her POIs with change requests
@@ -102,6 +103,10 @@ class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
 
+    def create(self, *args, **kwargs):
+        self.request.data["user"] = self.request.user.id
+        return viewsets.ModelViewSet.create(self, *args, **kwargs)
+
 
 class POIViewSet(viewsets.ModelViewSet):
     """
@@ -113,7 +118,6 @@ class POIViewSet(viewsets.ModelViewSet):
     bbox_filter_include_overlapping = True
     filter_class = POIFilter
     filter_fields = ('severity',)
-
 
     def get_queryset(self, *args, **kwargs):
         if self.request.user.is_anonymous:
