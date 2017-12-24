@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.split(os.path.abspath(os.path.join(os.path.split(os.path.abspath(__file__))[0], os.pardir)))[0]
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,6 +25,8 @@ SECRET_KEY = '^c@h)+a9_af=l%^$m08!&@u39tyqdlt=w&rvm+0u+38be0@kd1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+SITE_ID = 1
 
 ALLOWED_HOSTS = ["*"]
 
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django_filters',
+
     'api',
     'rest_framework',
     'rest_framework_gis',
@@ -130,8 +134,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
+
+# djangorest-framework settings
+# http://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
     #'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
     'PAGE_SIZE': 100,
@@ -144,18 +154,21 @@ REST_FRAMEWORK = {
     'JWT_VERIFY_EXPIRATION': False
 }
 
+
 # django-cors-headers settings
-# (see https://github.com/ottoyiu/django-cors-headers/ for more options)
+# https://github.com/ottoyiu/django-cors-headers/
+
 CORS_ORIGIN_ALLOW_ALL = True
+
+
+# django-taggit settings
+# https://django-taggit.readthedocs.io/en/latest/index.html
 
 TAGGIT_CASE_INSENSITIVE = True
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
-SITE_ID = 1
-SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
+# django-map-widgets settings
+# https://django-map-widgets.readthedocs.io/en/latest/widgets/point_field_map_widgets.html#settings
 
 MAP_WIDGETS = {
     "GooglePointFieldWidget": (
