@@ -26,5 +26,7 @@ echo "-> Create PufoMap's DB"
 createdb pufomap
 echo "-> Load migrations"
 python manage.py migrate
+echo "-> Load fixtures"
+python manage.py loaddata groups
 echo "-> Generate sample data"
 python manage.py fixtures
