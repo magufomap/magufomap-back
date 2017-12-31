@@ -1,15 +1,15 @@
-# pufomap-back
-Backend para PufoMap
+# magufomap-back
+Backend para MagufoMap
 
 ## System
 $ sudo apt-get install binutils libproj-dev gdal-bin geos
-> createdb pufomap
+> createdb magufomap
 
 ## Docker
 
-docker build -t pufomap-db:1.0 -f Dockerfile_db .
-docker run -d --name pufomap_db -p 5432:5432 -e POSTGRES_DB=pufomap -v /path/to/pufomap-back/data:/var/lib/postgresql/data pufomap-db:1.0
-psql -h localhost -U postgres -d pufomap
+docker build -t magufomap-db:1.0 -f Dockerfile_db .
+docker run -d --name magufomap_db -p 5432:5432 -e POSTGRES_DB=magufomap -v /path/to/magufomap-back/data:/var/lib/postgresql/data magufomap-db:1.0
+psql -h localhost -U postgres -d magufomap
 
 ## Filters
 

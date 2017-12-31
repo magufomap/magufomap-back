@@ -1,0 +1,11 @@
+[flake8]
+ignore = E41,E266
+max-line-length = 120
+exclude =
+    .git,
+    .env,
+    *__pycache__*,
+    *tests*,
+    *scripts*,
+    *settings*,
+max-complexity = 10

@@ -1,13 +1,15 @@
 django==2.0
+psycopg2==2.7.3.2
 djangorestframework==3.7.3
 djangorestframework-jwt==1.11.0
-#django-taggit==0.22.1
-git+https://github.com/alex/django-taggit.git
-psycopg2==2.7.3.2
-django-map-widgets==0.1.9
 djangorestframework-gis==0.12
-django-filter==1.1.0
+djangorestframework-camel-case==0.2.0
 django-cors-headers==2.1.0
+django-filter==1.1.0
+git+https://github.com/alex/django-taggit.git  # django-taggit==0.22.1
+django-map-widgets==0.1.9
 Pillow==4.3.0
+
+# For sample data
 Faker==0.8.8
 requests==2.18.4
