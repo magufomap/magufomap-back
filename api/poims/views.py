@@ -34,8 +34,8 @@ class POIMViewSet(MultiSerializerViewSetMixin, viewsets.ModelViewSet):
         # Count rattings (for detail view)
         if (self.action == 'retrieve'):
             queryset = queryset.annotate(
-                positive_ratings_count=Count('ratings', filter=Q(ratings__vote=1)),
-                negative_ratings_count=Count('ratings', filter=Q(ratings__vote=-1))
+                positive_ratings_count=Count('ratings', filter=Q(ratings__vote=1), distinct=True),
+                negative_ratings_count=Count('ratings', filter=Q(ratings__vote=-1), distinct=True)
             )
 
         # is visited by me?
@@ -48,4 +48,4 @@ class POIMViewSet(MultiSerializerViewSetMixin, viewsets.ModelViewSet):
             output_field=IntegerField()
         )))
 
-        return queryset.distinct()
+        return queryset
