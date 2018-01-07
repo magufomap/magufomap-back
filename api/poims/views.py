@@ -29,7 +29,7 @@ class POIMViewSet(MultiSerializerViewSetMixin, viewsets.ModelViewSet):
 
         # Filter no published POIMS (for anonymous users)
         if self.request.user.is_anonymous:
-            queryset.filter(status=choices.PUBLISHED)
+            queryset = queryset.filter(status=choices.PUBLISHED)
 
         # Count rattings (for detail view)
         if (self.action == 'retrieve'):
