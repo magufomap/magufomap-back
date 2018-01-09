@@ -10,14 +10,15 @@ import random
 import requests
 import shutil
 
-from api.change_requests.models import ChangeRequest
-from api.change_requests import choices as change_requests_choices
-from api.comments.models import Comment
-from api.poims.models import POIMImage, POIM
-from api.poims import choices as poims_choices
-from api.ratings.models import Rating
-from api.ratings import choices as ratings_choices
-from api.users.models import User
+from api.models import (ChangeRequest,
+                        Comment,
+                        POIMImage, POIM,
+                        Rating,
+                        User)
+
+from api.choices import (change_requests as change_requests_choices,
+                         poims as poims_choices,
+                         ratings as ratings_choices)
 
 
 fake = Faker()

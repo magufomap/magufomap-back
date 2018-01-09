@@ -54,12 +54,7 @@ INSTALLED_APPS = [
     "corsheaders",
 
     # Magufomap apps
-    "api.change_requests",
-    "api.comments",
-    "api.poims",
-    "api.ratings",
-    "api.tags",
-    "api.users",
+    "api",
     'magufomap'
 ]
 
@@ -109,7 +104,7 @@ DATABASES = {
 }
 
 # Set the custom user model as default user model
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'api.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
