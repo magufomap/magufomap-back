@@ -19,7 +19,7 @@ class POIMImageSerializer(serializers.ModelSerializer):
 class POIMSerializer(serializers.HyperlinkedModelSerializer):
     owner = BasicUserSerializer(read_only=True)
     tags = TagsField()
-    photos = POIMImageSerializer(many=True, read_only=True)
+    photos = POIMImageSerializer(many=True, required=False)
     comments = CommentSerializer(many=True, read_only=True)
     change_requests = ChangeRequestSerializer(many=True, read_only=True)
     positive_ratings_count = serializers.IntegerField(read_only=True)
@@ -33,6 +33,7 @@ class POIMSerializer(serializers.HyperlinkedModelSerializer):
                   'created_date', 'updated_date', 'url', 'is_visited', 'my_rating',
                   'tags', 'photos', 'comments', 'change_requests',
                   'positive_ratings_count', 'negative_ratings_count')
+        read_only_fields = ('status',)
 
     def get_my_rating(self, obj):
         try:
