@@ -8,7 +8,7 @@ from api.choices import poims as choices
 
 class POIM(models.Model):
     name = models.CharField(max_length=200)
-    location = geomodels.PointField(blank=False, null=True)
+    location = geomodels.PointField(blank=False, null=False)
     description = models.TextField()
     status = models.CharField(max_length=50, choices=choices.STATUSES, default=choices.PENDING)
     severity = models.IntegerField(choices=choices.SEVERITIES, default=1)

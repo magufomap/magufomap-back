@@ -19,7 +19,7 @@ class POIMImageSerializer(serializers.ModelSerializer):
 class POIMSerializer(serializers.HyperlinkedModelSerializer):
     owner = BasicUserSerializer(read_only=True)
     tags = TagsField()
-    photos = POIMImageSerializer(many=True, required=False)
+    photos = POIMImageSerializer(many=True, read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
     change_requests = ChangeRequestSerializer(many=True, read_only=True)
     positive_ratings_count = serializers.IntegerField(read_only=True)
