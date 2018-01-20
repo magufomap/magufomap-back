@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_gis",
     "corsheaders",
+    "django_gravatar",
 
     # Magufomap apps
     "api",
@@ -203,3 +204,9 @@ MAP_WIDGETS = {
     ),
     "GOOGLE_MAP_API_KEY": "AIzaSyCsC2XNNUoF8gJQxCSH-7mM1hOv2hRuqbg"
 }
+
+# django-gravatar2
+GRAVATAR_DEFAULT_SIZE=180
+GRAVATAR_DEFAULT_IMAGE="monsterid"
+GRAVATAR_DEFAULT_RATING="G"
+GRAVATAR_DEFAULT_SECURE=True
