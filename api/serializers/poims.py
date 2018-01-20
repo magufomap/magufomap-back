@@ -13,7 +13,7 @@ from .users import BasicUserSerializer
 class POIMImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = POIMImage
-        fields = ('photo',)
+        fields = ('poim', 'photo')
 
 
 class POIMSerializer(serializers.HyperlinkedModelSerializer):
