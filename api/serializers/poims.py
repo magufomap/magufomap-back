@@ -6,7 +6,7 @@ from api.models import POIM, POIMImage
 from .change_requests import ChangeRequestSerializer
 from .comments import CommentSerializer
 from .ratings import MyRatingSerializer
-from .tags import TagsField
+from .tags import TagListSerializerField, TaggitSerializer
 from .users import BasicUserSerializer
 
 
@@ -16,9 +16,9 @@ class POIMImageSerializer(serializers.ModelSerializer):
         fields = ('poim', 'photo')
 
 
-class POIMSerializer(serializers.HyperlinkedModelSerializer):
+class POIMSerializer(TaggitSerializer, serializers.HyperlinkedModelSerializer):
     owner = BasicUserSerializer(read_only=True)
-    tags = TagsField()
+    tags = TagListSerializerField()
     photos = POIMImageSerializer(many=True, read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
     change_requests = ChangeRequestSerializer(many=True, read_only=True)
