@@ -29,11 +29,15 @@ class POIMSerializer(TaggitSerializer, serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = POIM
-        fields = ('id', 'name', 'owner', 'description', 'location', 'status', 'severity',
+        fields = ('id', 'name', 'slug', 'owner', 'description', 'location', 'status', 'severity',
                   'created_date', 'updated_date', 'url', 'is_visited', 'my_rating',
                   'tags', 'photos', 'comments', 'change_requests',
                   'positive_ratings_count', 'negative_ratings_count')
-        read_only_fields = ('status',)
+        read_only_fields = ('status', 'slug')
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'url': {'lookup_field': 'slug'}
+        }
 
     def get_my_rating(self, obj):
         try:
@@ -48,4 +52,9 @@ class POIMListSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = POIM
-        fields = ('id', 'name', 'location', 'status', 'severity', 'url', 'is_visited')
+        fields = ('id', 'name', 'slug', 'location', 'status', 'severity', 'url', 'is_visited')
+        read_only_fields = ('status', 'slug')
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'url': {'lookup_field': 'slug'}
+        }

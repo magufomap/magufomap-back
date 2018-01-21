@@ -14,6 +14,7 @@ from api.utils.viewsets import MultiSerializerViewSetMixin
 
 
 class POIMViewSet(MultiSerializerViewSetMixin, viewsets.ModelViewSet):
+    lookup_field = 'slug'
     queryset = POIM.objects.all().order_by('-updated_date', 'id')
     serializer_class = POIMSerializer
     serializer_action_classes = {

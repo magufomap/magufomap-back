@@ -10,6 +10,7 @@ git+https://github.com/alex/django-taggit.git  # django-taggit==0.22.1
 django-map-widgets==0.1.9
 Pillow==4.3.0
 django-gravatar2==1.4.2
+awesome-slugify==1.6.5
 
 # For sample data
 Faker==0.8.8
