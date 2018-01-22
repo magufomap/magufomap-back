@@ -1,6 +1,5 @@
 from django.db.models import Case, Count, IntegerField, Q, Sum, When
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework_extensions.mixins import NestedViewSetMixin
 from rest_framework import viewsets
 from rest_framework_gis.filters import InBBoxFilter
 
@@ -56,7 +55,7 @@ class POIMViewSet(MultiSerializerViewSetMixin, viewsets.ModelViewSet):
         serializer.save(owner=self.request.user)
 
 
-class POIMImageViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+class POIMImageViewSet(viewsets.ModelViewSet):
     queryset = POIMImage.objects.all().order_by('poim', 'id')
     serializer_class = POIMImageSerializer
     permission_classes = [IsPOIMOwnerOrReadOnly]
