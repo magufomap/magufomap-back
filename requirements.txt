@@ -14,4 +14,4 @@ awesome-slugify==1.6.5
 
 # For sample data
 Faker==0.8.8
-requests==2.18.4
+requests==2.20.0
