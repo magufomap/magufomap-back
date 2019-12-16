@@ -1,20 +1,30 @@
 # magufomap-back
 Backend para MagufoMap
 
-## System
+
+# Arch Linux based distribution
 
 ```bash
-$ sudo apt-get install binutils libproj-dev gdal-bin geos
+$ sudo pacman -S binutils proj gdal geos poppler cfitsio icu
+$ sudo systemctl start docker
+$ sudo docker build -t magufomap-db:1.0 -f Dockerfile_db .
+$ sudo docker run -d --name magufomap_db -p 5432:5432 -e POSTGRES_DB=magufomap -v /path/to/magufomap-back/data:/var/lib/postgresql/data magufomap-db:1.0
+$ psql -h localhost -U postgres -d magufomap
 > createdb magufomap
 ```
 
-## Docker
+
+# Debian Linux based distribution
 
 ```bash
-$ docker build -t magufomap-db:1.0 -f Dockerfile_db .
-$ docker run -d --name magufomap_db -p 5432:5432 -e POSTGRES_DB=magufomap -v /path/to/magufomap-back/data:/var/lib/postgresql/data magufomap-db:1.0
+$ sudo pacman -S binutils libproj-dev gdal-bin geos
+$ sudo systemctl start docker
+$ sudo docker build -t magufomap-db:1.0 -f Dockerfile_db .
+$ sudo docker run -d --name magufomap_db -p 5432:5432 -e POSTGRES_DB=magufomap -v /path/to/magufomap-back/data:/var/lib/postgresql/data magufomap-db:1.0
 $ psql -h localhost -U postgres -d magufomap
+> createdb magufomap
 ```
+
 
 ## Filters
 
